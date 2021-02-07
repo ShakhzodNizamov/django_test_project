@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Detail</title>
+</head>
+<body>
+<a href="/"> Back to Main page</a>
+
+
+<hr align="left" width="300" size="3" color="#ff9900"/>
+
+
+<p>{{ post.username }}</p>
+<img src="{{ post.image.url }}" width="300">
+<p> {{ post.description }}</p>
+<hr align="left" width="300" size="3" color="#ff9900"/>
+
+<form method="post" enctype="multipart/form-data" action="{% url 'add_comment' post.id %}">
+    {% csrf_token %}
+    <input type="text" size="50" name="text">
+    <p><input type="submit" value="Upload Comment"></p>
+    {{ form.as_p }}
+</form>
+
+
+<p>Comments:</p>
+<hr align="left" width="300" size="2" color="#ff3300"/>
+{% for comment in comment_list %}
+    <strong>username:</strong> {{ comment.username }}
+    <br>
+    <strong> text:</strong> {{ comment.text }}
+    <hr align="left" width="300" size="2" color="#ff3300"/>
+{% endfor %}
+</body>
+</html>

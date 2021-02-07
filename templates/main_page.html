@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <style type="text/css">
+        div {
+            text-align: end;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <div>
+        {{ user.username }}
+        <a href="{% url 'new_post_page' %}">
+            <button>New post</button>
+        </a>
+        <a href="{% url 'account_logout' %}">
+            <button>Log out</button>
+        </a>
+    </div>
+    <hr align="left" width="300" size="3" color="#ff9900"/>
+
+    {% for post in posts %}
+        <p>{{ post.username }}</p>
+        <img src="{{ post.image.url }}" width="300" alt="post image">
+        <p> {{ post.description }}</p>
+        {#            <img src="{% static 'icons/comment_icon.jpg' %}" width="30" alt="icon">#}
+        <a href="{% url 'detail' post.id %}">comment</a>
+        <hr align="left" width="300" size="3" color="#ff9900"/>
+
+    {% endfor %}
+{% else %}
+    <p>You are not authenticated! </p>
+    <a href="{% url 'account_login' %}"> Login</a>
+    <br>
+    Or
+    <br>
+    <a href="{% url 'account_signup' %}"> Sign Up</a>
+{% endif %}
+</body>
+</html>
